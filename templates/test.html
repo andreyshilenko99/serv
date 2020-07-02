@@ -20,6 +20,7 @@
     <script src="https://rawcdn.githack.com/ardhi/Leaflet.MousePosition/c32f1c84/src/L.Control.MousePosition.js"></script>
     <link rel="stylesheet"
           href="https://rawcdn.githack.com/ardhi/Leaflet.MousePosition/c32f1c84/src/L.Control.MousePosition.css"/>
+    {#    <script src="node_modules/leaflet-ajax/dist/leaflet.ajax.min.js"></script>#}
     {% leaflet_js %}
     {% leaflet_css %}
     {% leaflet_js plugins="ALL" %}
@@ -97,6 +98,29 @@
                 data: JSON.stringify(data)
             });
         }
+        {#var geojsonLayer = L.geoJson.ajax("static/data.jsonp");#}
+        {#geojsonLayer.addTo(map);#}
+        var district_boundary = new L.geoJson();
+        district_boundary.addTo(map);
+        var myAjaxCall = function () {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "http://127.0.0.1:8000/static/data.jsonp",
+                cache: false,
+                async:options.sync,
+                success: function (data) {
+                    $(data.features).each(function (key, data) {
+                        district_boundary.addData(data);
+                    });
+
+                }
+            }).error(function () {
+            });
+        }
+       setInterval(myAjaxCall, 10000);
+
+
 
     }
 
@@ -106,6 +130,7 @@
 
 <body>
 <a href='#' id='export'>Export Features</a>
+<div id="content"></div>
 {% leaflet_map "yourmap" callback="window.map_init_basic" %}
 </body>
 

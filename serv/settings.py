@@ -141,7 +141,9 @@ LEAFLET_CONFIG = {
                     '/static/node_modules/leaflet-draw/dist/leaflet.draw-src.css'],
             'js': ['/static/node_modules/leaflet-draw/dist/leaflet.draw.js',
                    '/static/node_modules/leaflet-draw/dist/leaflet.draw-src.js'],
-            'auto-include': True,
-        }
+            'auto-include': True
+        },
+        'name': {'js': ['/static/node_modules/leaflet-ajax/dist/leaflet.ajax.js'], 'auto-include': True},
+        'ggg': {'js': ['/static/node_modules/jquery/dist/jquery.js'], 'auto-include': True}
     }
 }
